@@ -55,7 +55,6 @@ const SignIn = () => {
             toast.error("An error occurred. Please try again.");
         }
     };
-    
 
     return (
         <div className="flex items-center justify-center min-h-screen p-3">
@@ -75,7 +74,8 @@ const SignIn = () => {
                         id="email"
                         icon={<AiOutlineMail />}
                         label="Email"
-                        onChange={handleChange}                    />
+                        onChange={handleChange}
+                    />
                     <InputField
                         type="password"
                         placeholder="Password"
@@ -84,7 +84,8 @@ const SignIn = () => {
                         label="Password"
                         showPassword={showPassword}
                         toggleShowPassword={toggleShowPassword}
-                        onChange={handleChange}                    />
+                        onChange={handleChange}
+                    />
                     <div className="flex justify-between items-center font-poppins font-light text-tiny">
                         <label className="flex items-center">
                             <input type="checkbox" className="mr-1" />
@@ -93,7 +94,8 @@ const SignIn = () => {
                         <Link to="/forgot-password" className="text-primary">Forgot Password?</Link>
                     </div>
                     <Button
-                        className='bg-secondary h-12 rounded-custom' disabled={loading}>{loading ? 'Loading...' : 'Login'}</Button>
+                        className='bg-secondary h-12 rounded-custom' disabled={loading}>{loading ? 'Loading...' : 'Login'}
+                    </Button>
                 </form>
                 <div className="text-center my-4 text-tertiary font-poppins text-tiny">
                     <span>or continue with</span>
