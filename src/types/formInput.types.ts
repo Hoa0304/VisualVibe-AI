@@ -6,4 +6,5 @@ export interface InputFieldProps {
     label: string;
     showPassword?: boolean;
     toggleShowPassword?: () => void;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; 
 }
