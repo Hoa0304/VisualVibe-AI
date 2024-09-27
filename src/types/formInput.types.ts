@@ -3,8 +3,9 @@ export interface InputFieldProps {
     placeholder: string;
     id: string;
     icon: React.ReactNode;
-    label: string;
+    label?: string;
     showPassword?: boolean;
     toggleShowPassword?: () => void;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; 
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    classNamePrefix?: string;
 }
