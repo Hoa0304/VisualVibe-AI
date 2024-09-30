@@ -10,10 +10,11 @@ const InputField: React.FC<InputFieldProps> = React.memo(({
     label,
     showPassword,
     toggleShowPassword,
-    onChange
+    onChange,
+    classNamePrefix
 }) => {
     return (
-        <div className="relative">
+        <div className={`relative ${classNamePrefix}`}>
             <span className="absolute left-2 top-3 text-white">{icon}</span>
             <label className="absolute -top-4 font-poppins text-primary text-tiny font-light text-sm">{label}</label>
             <input
@@ -22,7 +23,7 @@ const InputField: React.FC<InputFieldProps> = React.memo(({
                 id={id}
                 onChange={onChange}
                 style={{ color: '#C10C99', fontFamily: 'poppins', fontSize: '15px' }}
-                className="bg-transparent border-b-2 border-primary p-2 pl-10 w-full focus:outline-none focus:border-[#C10C99] mb-4 placeholder-primary font-light"
+                className={`bg-transparent border-b-2 border-primary p-2 pl-10 w-full focus:outline-none focus:border-[#C10C99] mb-4 placeholder-primary font-light`}
             />
             {type === 'password' && (
                 <span
