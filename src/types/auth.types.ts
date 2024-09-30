@@ -5,15 +5,12 @@ export interface User {
 }
 
 export interface UserState {
-    currentUser: string | null;
+    currentUser?: User | null;
     loading: boolean;
     error: string | false; 
 }
 
 export interface RootState {
-    user: {
-      loading: boolean;
-      error: string | false;
-    };
+    user: UserState;
 }
   

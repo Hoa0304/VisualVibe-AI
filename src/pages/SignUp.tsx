@@ -1,71 +1,19 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import girlImage from '../assets/images/girl.png';
 import { AiOutlineMail } from 'react-icons/ai';
 import { FiLock } from 'react-icons/fi';
 import InputField from '../components/InputField';
 import Button from '../components/Button';
 import { MdPersonOutline } from 'react-icons/md';
-import { useState } from 'react';
-import { User } from '../types/auth.types';
-import { toast } from 'react-toastify';
+import { useSignUpController } from '../controllers/authController';
 
 const SignUp: React.FC = () => {
-    const navigate = useNavigate();
-    const [formData, setFormData] = useState<User>({
-        userName: '',
-        email: '',
-        password: '',
-    });
-    const [confirmPassword, setConfirmPassword] = useState<string>('');
-    const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
-    const [loading, setLoading] = useState<boolean>(false);
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { id, value } = e.target;
-        setFormData(prev => ({ ...prev, [id]: value }));
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (formData.password !== confirmPassword) {
-            toast.error("Passwords do not match!");
-            return;
-        }
-
-        setLoading(true);
-        try {
-            const res = await fetch('http://localhost:8000/users', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (!res.ok) {
-                const errorData = await res.json();
-                toast.error(errorData.message || "An error occurred.");
-                setLoading(false);
-                return;
-            }
-
-            const data = await res.json();
-            setLoading(false);
-            if (data.success === false) {
-                toast.error("Sign up failed!");
-                return;
-            }
-            navigate('/');
-        } catch (error: unknown) {
-            setLoading(false);
-            if (error instanceof Error) {
-                toast.error(error.message);
-            } else {
-                toast.error("An error occurred. Please try again.");
-            }
-        }
-    };
+    const {
+        loading,
+        handleInputChange,
+        setConfirmPassword,
+        handleSubmit,
+    } = useSignUpController();
 
     return (
         <div className="flex items-center justify-between min-h-screen">
@@ -96,23 +44,19 @@ const SignUp: React.FC = () => {
                         onChange={handleInputChange}
                     />
                     <InputField
-                        type={showPassword ? 'text' : 'password'}
+                        type="password"
                         placeholder="Enter your Password"
                         id="password"
                         icon={<FiLock />}
                         label="Password"
-                        showPassword={showPassword}
-                        toggleShowPassword={() => setShowPassword(prev => !prev)}
                         onChange={handleInputChange}
                     />
                     <InputField
-                        type={showConfirmPassword ? 'text' : 'password'}
+                        type="password"
                         placeholder="Confirm your Password"
                         id="confirm"
                         icon={<FiLock />}
                         label="Confirm Password"
-                        showPassword={showConfirmPassword}
-                        toggleShowPassword={() => setShowConfirmPassword(prev => !prev)}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                     <Button className='bg-secondary h-12 rounded-custom' disabled={loading}>
