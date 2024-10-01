@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserState } from '../types/auth.types';
+import { User, UserState } from '../types/auth.types';
 
 const initialState: UserState = {
     currentUser: null,
@@ -14,8 +14,9 @@ const userSlice = createSlice({
         signInStart: (state) => {
             state.loading = true;
         },
-        signInSuccess: (state, action: PayloadAction<string>) => {
+        signInSuccess: (state, action: PayloadAction<User>) => {
             state.currentUser = action.payload;
+            state.loading = false;
             state.error = false;
         },
         signInFailure: (state, action: PayloadAction<string>) => {
@@ -25,7 +26,7 @@ const userSlice = createSlice({
         updateUserStart: (state) => {
             state.loading = true;
         },
-        updateUserSuccess: (state, action: PayloadAction<string>) => {
+        updateUserSuccess: (state, action: PayloadAction<User>) => {
             state.currentUser = action.payload;
             state.loading = false;
             state.error = false;
