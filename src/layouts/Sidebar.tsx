@@ -3,7 +3,7 @@ import avt from '../assets/icons/avt.jpg';
 import { sidebarItems } from '../constants';
 import { SidebarItem as SidebarItemType } from '../types/home.types';
 import SidebarItem from '../components/SidebarItem';
-import { useSidebarController } from '../controllers/authController';
+import { useSidebarController } from '../hooks/useSidebarController';
 
 const Sidebar: React.FC = () => {
     const { handleSignOut } = useSidebarController();

@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 import girlImage from '../assets/images/girl.png';
 import { AiOutlineMail } from 'react-icons/ai';
 import { FiLock } from 'react-icons/fi';
-import InputField from '../components/InputField';
-import Button from '../components/Button';
+import InputField from '../components/common/InputField';
+import Button from '../components/common/Button';
 import { MdPersonOutline } from 'react-icons/md';
-import { useSignUpController } from '../controllers/authController';
+import { useSignUpController } from '../hooks/auth/useSignUpController';
 
 const SignUp: React.FC = () => {
     const {

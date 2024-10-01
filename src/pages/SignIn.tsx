@@ -2,11 +2,11 @@ import { Link } from 'react-router-dom';
 import peopleImage from '../assets/images/people.png';
 import { AiOutlineMail } from 'react-icons/ai';
 import { FiLock } from 'react-icons/fi';
-import InputField from '../components/InputField';
-import Button from '../components/Button';
+import InputField from '../components/common/InputField';
+import Button from '../components/common/Button';
 import Social from '../components/Social';
-import {useSignInController} from '../controllers/authController';
-import { useShowPassword } from '../hooks/useShowPassword';
+import { useShowPassword } from '../hooks/auth/useShowPassword';
+import { useSignInController } from '../hooks/auth/useSignInController';
 
 const SignIn = () => {
     const { loading, handleChange, handleSubmit } = useSignInController();
