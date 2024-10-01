@@ -23,6 +23,18 @@ export default {
       fontSize: {
         'tiny': '13px',
       },
+      borderRadius: {
+        'custom': '20px',
+      },
+      backgroundColor: {
+        lightgray: '#D3D3D3',
+      },
+      backgroundSize: {
+        'custom': '105.332% 612.786%',
+      },
+      backgroundPosition: {
+        'custom': '-14px -659.134px',
+      },
     },
   },
   plugins: [
