@@ -1,6 +1,6 @@
 import React from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-import { InputFieldProps } from '../types/formInput.types';
+import { InputFieldProps } from '../../types/formInput.types';
 
 const InputField: React.FC<InputFieldProps> = React.memo(({
     type,
@@ -22,6 +22,7 @@ const InputField: React.FC<InputFieldProps> = React.memo(({
                 placeholder={placeholder}
                 id={id}
                 onChange={onChange}
+                autoComplete="off"
                 style={{ color: '#C10C99', fontFamily: 'poppins', fontSize: '15px' }}
                 className={`bg-transparent border-b-2 border-primary p-2 pl-10 w-full focus:outline-none focus:border-[#C10C99] mb-4 placeholder-primary font-light`}
             />
