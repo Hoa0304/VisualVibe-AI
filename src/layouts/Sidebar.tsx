@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import avt from '../assets/icons/avt.jpg';
 import { sidebarItems } from '../constants';
 import { SidebarItem as SidebarItemType } from '../types/home.types';
-import SidebarItem from '../components/SidebarItem';
 import { useSidebarController } from '../hooks/useSidebarController';
+import SidebarItem from '../components/dashboard/SidebarItem';
 
-const Sidebar: React.FC = () => {
+const Sidebar: React.FC<{ setSelectedView: (view: string) => void }> = ({ setSelectedView }) => {
     const { handleSignOut } = useSidebarController();
+    const [activeView, setActiveView] = useState<string>('Home'); // Đặt view mặc định là 'Home'
+
+    const handleClick = (view: string) => {
+        setActiveView(view); // Cập nhật trạng thái activeView
+        setSelectedView(view); // Cập nhật view được chọn
+    };
 
     return (
         <nav className="w-64 text-primary font-inter font-light text-lg p-4 z-0">
@@ -18,9 +24,14 @@ const Sidebar: React.FC = () => {
             </figure>
             <nav>
                 <ul>
-                    <SidebarItem item={sidebarItems[0]} isActive={true} onSignOut={handleSignOut} />
-                    {sidebarItems.slice(1).map((item: SidebarItemType) => (
-                        <SidebarItem key={item.id} item={item} isActive={false} onSignOut={handleSignOut} />
+                    {sidebarItems.map((item: SidebarItemType) => (
+                        <SidebarItem
+                            key={item.id}
+                            item={item}
+                            isActive={activeView === item.name}
+                            onSignOut={handleSignOut}
+                            onClick={() => handleClick(item.name)}
+                        />
                     ))}
                 </ul>
             </nav>
