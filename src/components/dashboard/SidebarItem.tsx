@@ -15,12 +15,12 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ item, isActive, onSignOut, on
             ? 'bg-gradient-to-r from-[#CD46D9] to-[#27C5C9] rounded'
             : 'border duration-300 border-white hover:bg-gradient-to-r hover:from-[#CD46D9] hover:to-[#27C5C9] hover:rounded hover:opacity-95 hover:scale-90 hover:border-none'
             }`}
-        onClick={item.name === "Sign out" ? onSignOut : onClick} // Use the onClick prop for navigation
+        onClick={item.name === "Sign out" ? onSignOut : onClick} 
     >
         <span className="mr-5 bg-transparent">
             {React.createElement(item.icon, { className: "bg-transparent" })}
         </span>
-        <span className="bg-transparent">{item.name}</span> {/* Remove href to make it clickable without navigation */}
+        <span className="bg-transparent">{item.name}</span>
     </li>
 );
 
