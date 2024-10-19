@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Product } from '../types/product.types';
 import { handleError } from '../helpers/apiHelpers';
 
-const BASE_URL = 'http://localhost:8000/products';
+const BASE_URL = 'https://json-server-amn3.onrender.com/products';
 
 export const fetchProducts = async (): Promise<Product[]> => {
   try {
