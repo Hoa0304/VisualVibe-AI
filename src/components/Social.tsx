@@ -1,6 +1,6 @@
 import React from 'react';
 import google from '../assets/icons/google.svg';
-import facebook from '../assets/icons/facebook.svg';
+import facebook from '../assets/icons/Facebook.svg';
 import { FaApple } from 'react-icons/fa';
 
 const Social: React.FC = () => {
