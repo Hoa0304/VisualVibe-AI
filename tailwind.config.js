@@ -16,7 +16,7 @@ export default {
         secondary: '#C10C99',
         tertiary: '#B5B5B5',
         quaternary: '#CD46D9',
-        gradientStart: '#CD46D9',
+        component: '#505350',
         gradientEnd: '#27C5C9',
         bg: '#2F3133',
       },

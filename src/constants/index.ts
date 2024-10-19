@@ -1,4 +1,4 @@
-import { FaHome, FaShoppingBag, FaFileAlt, FaSignOutAlt } from 'react-icons/fa';
+import { FaHome, FaShoppingBag, FaSignOutAlt } from 'react-icons/fa';
 
 export const menuItems = [
     "Home",
@@ -9,8 +9,18 @@ export const menuItems = [
 ];
 
 export const sidebarItems = [
-    { id: 0,name: "Home", link: "/home", icon: FaHome }, 
-    { id: 1,name: "Product", link: "/product", icon: FaShoppingBag },
-    { id: 2,name: "Detail", link: "/detail", icon: FaFileAlt },
-    { id: 3,name: "Sign out", link: "/", icon: FaSignOutAlt }
+    { id: 0,name: "Home", icon: FaHome }, 
+    { id: 1,name: "Product", icon: FaShoppingBag },
+    { id: 2,name: "Sign out", icon: FaSignOutAlt }
 ];
+
+export const branches = [
+    "Computer",
+    "Headset",
+    "Android smartphones",
+    "Apple smartphones",
+    "Keyboard and mouse",
+    "Tablets"
+];
+
+export const stars = Array.from({ length: 5 }, (_, i) => i + 1);

@@ -10,5 +10,20 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: #2F3133;
+    background-color: theme('colors.bg');
+}
+
+.Toastify__toast-body {
+    background-color: white;
+}
+.Toastify__toast-body > div:last-child {
+    background-color: white;
+}
+.Toastify__toast-icon > svg{
+    background-color: white;
+}
+.Toastify__close-button {
+    color: white;
+    font-size: 18px;
+    opacity: 1; 
 }

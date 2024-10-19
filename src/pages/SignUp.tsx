@@ -16,10 +16,10 @@ const SignUp: React.FC = () => {
     } = useSignUpController();
 
     return (
-        <div className="flex items-center justify-between min-h-screen">
-            <div className="hidden lg:block">
-                <img src={girlImage} alt="Sign up" className="h-[800px] object-cover" style={{ marginLeft: '-40px', marginTop: '-20px' }} />
-            </div>
+        <div className="flex items-center justify-between">
+            <figure className="hidden lg:block h-full w-[40%]">
+                <img src={girlImage} alt="Sign up" className="object-cover" style={{ marginLeft: '-60px', marginTop:'15px'}} />
+            </figure>
             <div className="w-full md:w-1/3 p-5 mr-56">
                 <h1 className="font-poppins text-left font-normal my-7 text-white" style={{ fontSize: '30px' }}>Sign up</h1>
                 <p className="text-left text-primary font-poppins font-light text-base mb-4">If you already have an account register</p>

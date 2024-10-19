@@ -12,3 +12,29 @@ export const fetchProducts = async (): Promise<Product[]> => {
     throw handleError(error);
   }
 };
+
+export const addProduct = async (productData: Product): Promise<Product> => {
+  try {
+    const response = await axios.post(BASE_URL, productData);
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+export const editProduct = async (id: string, productData: Product): Promise<Product> => {
+  try {
+    const response = await axios.put(`${BASE_URL}/${id}`, productData);
+    return response.data;
+  } catch (error) {
+    throw handleError(error);
+  }
+};
+
+export const deleteProduct = async (id: string): Promise<void> => {
+  try {
+    await axios.delete(`${BASE_URL}/${id}`);
+  } catch (error) {
+    throw handleError(error);
+  }
+};

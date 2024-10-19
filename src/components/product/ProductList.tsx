@@ -1,16 +1,28 @@
-import React from 'react';
+import React, {memo, useCallback} from 'react'; 
 import { Product } from '../../types/product.types';
 import Button from '../common/Button';
+import '../../App.css'
 
 interface ProductListProps {
   products: Product[];
   onEdit: (product: Product) => void;
+  onDelete: (productId: string) => void;
 }
 
-const ProductList: React.FC<ProductListProps> = ({ products, onEdit }) => {
+const ProductList: React.FC<ProductListProps> = memo(({ products, onEdit, onDelete }) => {
+  // const renderStars = (starCount: number) => {
+  //   return Array.from({ length: starCount }, (_, index) => (
+  //     <span key={index} className="text-yellow-500">⭐</span>
+  //   ));
+  // };
+  const renderStars = useCallback((starCount: number) => {
+    return Array.from({ length: starCount }, (_, index) => (
+      <span key={index} className="text-yellow-500">⭐</span>
+    ));
+  }, []);
   return (
-    <div className="overflow-x-auto font-poppins">
-      <table className="min-w-full border border-secondary">
+    <div className="overflow-auto scrollbar-hiddens font-poppins ">
+      <table className="min-w-full border border-secondary overflow-scroll">
         <thead>
           <tr className="text-primary uppercase text-base">
             <th className="py-3 px-6 text-left font-medium">Image</th>
@@ -18,35 +30,57 @@ const ProductList: React.FC<ProductListProps> = ({ products, onEdit }) => {
             <th className="py-3 px-6 text-left font-medium">Branch</th>
             <th className="py-3 px-6 text-left font-medium">Price</th>
             <th className="py-3 px-6 text-left font-medium">Amount</th>
+            <th className="py-3 px-6 text-center font-medium">Star</th>
             <th className="py-3 px-6 text-left font-medium">Actions</th>
           </tr>
         </thead>
         <tbody className="text-primary text-sm font-light">
           {products.length > 0 ? (
             products.map((product) => (
-              <tr key={product.id} className="border-none hover:bg-gray-100">
+              <tr key={product.id} className="border-none">
                 <td className="py-3 px-6 text-left">
                   <img src={product.image} alt={product.name} className="w-16 h-16 object-cover rounded-lg" />
                 </td>
-                <td className="py-3 px-6 text-left">{product.name}</td>
+                <td className="py-3 px-6 text-left max-h-[4.5rem] overflow-hidden">
+  <span className="truncate-lines">{product.name}</span>
+</td>
                 <td className="py-3 px-6 text-left">{product.branch}</td>
-                <td className="py-3 px-6 text-left font-medium">${product.price}</td>
-                <td className="py-3 px-6 text-center font-medium">{product.amount}</td>
-                <td className="py-3 px-6 text-left">
-                  <Button children='Edit' onClick={() => onEdit(product)} className='bg-secondary py-1 px-2 mb-5 rounded' />
-                  
+                <td className="py-3 px-6 text-left font-medium max-w-[7rem]">
+                <span className="truncate-line ">${product.price}</span>
+
+                </td>
+                <td className="py-3 px-6 text-center font-medium max-w-[7rem]">
+                <span className="truncate-line ">{product.amount}</span>
+
+                </td>
+                <td className="py-3 px-6 text-center font-medium">
+                  {renderStars(product.star)} {/* Hiển thị hình sao */}
+                </td>
+                <td className="py-3 px-6 text-left flex space-x-2">
+                  <Button children='Edit' onClick={() => onEdit(product)} className='bg-secondary py-1 px-2 rounded' />
+                  <Button 
+                    children='Delete' 
+                    onClick={() => {
+                      if (product.id) {
+                        onDelete(product.id);
+                      } else {
+                        console.error("Product ID is undefined");
+                      }
+                    }} 
+                    className='bg-red-500 text-white py-1 px-2 rounded' 
+                  />
                 </td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={6} className="py-3 px-6 text-center">Loading products...</td>
+              <td colSpan={7} className="py-3 px-6 text-center bg-transparent">Loading products...</td>
             </tr>
           )}
         </tbody>
       </table>
     </div>
   );
-};
+});
 
 export default ProductList;
