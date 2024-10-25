@@ -1,10 +1,7 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "jsx": "react-jsx", // hoặc "react" nếu bạn dùng React cũ hơn
-    "strict": true,
-    "esModuleInterop": true,
-    // Các tùy chọn khác...
-  }
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }
