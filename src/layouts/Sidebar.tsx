@@ -7,11 +7,11 @@ import SidebarItem from '../components/dashboard/SidebarItem';
 
 const Sidebar: React.FC<{ setSelectedView: (view: string) => void }> = ({ setSelectedView }) => {
     const { handleSignOut } = useSidebarController();
-    const [activeView, setActiveView] = useState<string>('Home'); // Đặt view mặc định là 'Home'
+    const [activeView, setActiveView] = useState<string>('Home');
 
     const handleClick = (view: string) => {
-        setActiveView(view); // Cập nhật trạng thái activeView
-        setSelectedView(view); // Cập nhật view được chọn
+        setActiveView(view);
+        setSelectedView(view);
     };
 
     return (

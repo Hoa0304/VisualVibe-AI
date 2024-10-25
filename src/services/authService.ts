@@ -2,7 +2,7 @@ import axios from 'axios';
 import { User } from '../types/auth.types';
 import { handleError } from '../helpers/apiHelpers';
 
-const API_URL = 'http://localhost:8000/users';
+const API_URL = 'https://json-server-amn3.onrender.com/users';
 
 export const signUpUser = async (formData: User) => {
     try {
