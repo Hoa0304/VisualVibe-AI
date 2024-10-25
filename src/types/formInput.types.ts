@@ -12,4 +12,5 @@ export interface InputFieldProps {
     options?: string[];
     classNamePrefix?: string;
     isPriceField?: boolean;
+    noMargin?: boolean;
 }

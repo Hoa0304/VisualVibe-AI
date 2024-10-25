@@ -24,3 +24,5 @@ export const branches = [
 ];
 
 export const stars = Array.from({ length: 5 }, (_, i) => i + 1);
+
+export const API_URL = "https://ut-zmtt.onrender.com/";

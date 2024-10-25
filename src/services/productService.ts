@@ -1,12 +1,12 @@
 import axios from 'axios';
-import { Product } from '../types/product.types';
 import { handleError } from '../helpers/apiHelpers';
+import { API_URL } from '../constants';
+import { Product } from '../types/product.types';
 
-const BASE_URL = 'https://json-server-amn3.onrender.com/products';
 
 export const fetchProducts = async (): Promise<Product[]> => {
   try {
-    const response = await axios.get(BASE_URL);
+    const response = await axios.get(`${API_URL}products`);
     return response.data;
   } catch (error) {
     throw handleError(error);
@@ -15,7 +15,7 @@ export const fetchProducts = async (): Promise<Product[]> => {
 
 export const addProduct = async (productData: Product): Promise<Product> => {
   try {
-    const response = await axios.post(BASE_URL, productData);
+    const response = await axios.post(`${API_URL}products`, productData);
     return response.data;
   } catch (error) {
     throw handleError(error);
@@ -24,7 +24,7 @@ export const addProduct = async (productData: Product): Promise<Product> => {
 
 export const editProduct = async (id: string, productData: Product): Promise<Product> => {
   try {
-    const response = await axios.put(`${BASE_URL}/${id}`, productData);
+    const response = await axios.put(`${API_URL}products/${id}`, productData);
     return response.data;
   } catch (error) {
     throw handleError(error);
@@ -33,7 +33,7 @@ export const editProduct = async (id: string, productData: Product): Promise<Pro
 
 export const deleteProduct = async (id: string): Promise<void> => {
   try {
-    await axios.delete(`${BASE_URL}/${id}`);
+    await axios.delete(`${API_URL}products/${id}`);
   } catch (error) {
     throw handleError(error);
   }

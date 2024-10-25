@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Product } from '../../types/product.types';
 
-const useProductSate = (productToEdit: Product | null) => {
+const useProductState = (productToEdit: Product | null) => {
     const [formData, setFormData] = useState<Product>({
         image: '',
         name: '',
@@ -16,6 +16,8 @@ const useProductSate = (productToEdit: Product | null) => {
     const [price, setPrice] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [star, setStar] = useState(1);
+    
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     useEffect(() => {
         if (productToEdit) {
@@ -28,13 +30,40 @@ const useProductSate = (productToEdit: Product | null) => {
         }
     }, [productToEdit]);
 
+    const validate = () => {
+        const newErrors: { [key: string]: string } = {};
+        
+        if (!formData.name) {
+            newErrors.name = 'Name is required';
+        }
+        
+        if (!imageUrl) {
+            newErrors.image = 'Image URL is required';
+        } else if (!/^https?:\/\//.test(imageUrl)) {
+            newErrors.image = 'Invalid image URL';
+        }
+
+        if (amount === '' || Number(amount) < 1) {
+            newErrors.amount = 'Amount must be greater than or equal to 1';
+        }
+
+        if (price === '' || Number(price) <= 0) {
+            newErrors.price = 'Price must be greater than 0';
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
     const handleInputChange = (id: string, value: string) => {
         setFormData(prev => ({ ...prev, [id]: value }));
+        setErrors(prev => ({ ...prev, [id]: '' }));
     };
 
     const handleBranchChange = (value: string) => {
         setBranch(value);
         setFormData(prev => ({ ...prev, branch: value }));
+        setErrors(prev => ({ ...prev, branch: '' }));
     };
 
     const handleAmountChange = (value: string) => {
@@ -42,6 +71,7 @@ const useProductSate = (productToEdit: Product | null) => {
         if (numericValue >= 1) {
             setAmount(value);
             setFormData(prev => ({ ...prev, amount: numericValue }));
+            setErrors(prev => ({ ...prev, amount: '' }));
         } else {
             setAmount('');
         }
@@ -50,11 +80,13 @@ const useProductSate = (productToEdit: Product | null) => {
     const handlePriceChange = (value: string) => {
         setPrice(value);
         setFormData(prev => ({ ...prev, price: Number(value) }));
+        setErrors(prev => ({ ...prev, price: '' }));
     };
 
     const handleUrlChange = (value: string) => {
         setImageUrl(value);
         setFormData(prev => ({ ...prev, image: value }));
+        setErrors(prev => ({ ...prev, image: '' }));
     };
 
     const handleStarChange = (value: number) => {
@@ -63,12 +95,13 @@ const useProductSate = (productToEdit: Product | null) => {
     };
 
     const resetForm = () => {
-        setFormData({ image: '', name: '', amount: 0, price: 0, branch: 'Computer', star: 1 }); // Reset star
+        setFormData({ image: '', name: '', amount: 0, price: 0, branch: 'Computer', star: 1 });
         setBranch('Computer');
         setAmount('');
         setPrice('');
         setImageUrl('');
         setStar(5);
+        setErrors({});
     };
 
     return {
@@ -78,6 +111,8 @@ const useProductSate = (productToEdit: Product | null) => {
         price,
         imageUrl,
         star,
+        errors,
+        validate,
         handleInputChange,
         handleBranchChange,
         handleAmountChange,
@@ -88,4 +123,4 @@ const useProductSate = (productToEdit: Product | null) => {
     };
 };
 
-export default useProductSate;
+export default useProductState;

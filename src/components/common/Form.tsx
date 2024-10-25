@@ -1,10 +1,10 @@
 import React from 'react';
-import InputField from './InputField';
-import SelectField from './SelectField';
 import { branches, stars } from '../../constants';
 import { FormProps } from '../../types/product.types';
-import useProductSate from '../../hooks/product/useProductState';
+import useProductState from '../../hooks/product/useProductState';
 import { addProduct, editProduct } from '../../services/productService';
+import InputField from './InputField';
+import SelectField from './SelectField';
 
 export const Form: React.FC<FormProps> = ({ productToEdit, onFormSubmit }) => {
     const {
@@ -14,6 +14,8 @@ export const Form: React.FC<FormProps> = ({ productToEdit, onFormSubmit }) => {
         price,
         imageUrl,
         star,
+        errors,
+        validate,
         handleInputChange,
         handleBranchChange,
         handleAmountChange,
@@ -21,10 +23,15 @@ export const Form: React.FC<FormProps> = ({ productToEdit, onFormSubmit }) => {
         handleUrlChange,
         handleStarChange,
         resetForm
-    } = useProductSate(productToEdit || null);
+    } = useProductState(productToEdit || null);
 
     const handleAddOrEdit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!validate()) {
+            return;
+        }
+
         const productData = {
             ...formData,
             branch,
@@ -62,7 +69,10 @@ export const Form: React.FC<FormProps> = ({ productToEdit, onFormSubmit }) => {
                         id='image'
                         label='Image URL'
                         classNamePrefix='mb-2'
+                        noMargin
                     />
+                    {errors.image && <span className="text-red-500 mb-3">{errors.image}</span>}
+
                     <InputField
                         type="text"
                         placeholder="Enter your Name"
@@ -71,7 +81,10 @@ export const Form: React.FC<FormProps> = ({ productToEdit, onFormSubmit }) => {
                         value={formData.name}
                         onChange={(e) => handleInputChange('name', e.target.value)}
                         classNamePrefix='mb-2'
+                        noMargin
                     />
+                    {errors.name && <span className="text-red-500">{errors.name}</span>}
+
                     <SelectField
                         id="branch"
                         label="Branch"
@@ -79,8 +92,9 @@ export const Form: React.FC<FormProps> = ({ productToEdit, onFormSubmit }) => {
                         value={branch}
                         onChanges={handleBranchChange}
                         options={branches}
-                        classNamePrefix='mb-7'
+                        classNamePrefix='mt-7 mb-7'
                     />
+
                     <SelectField
                         id="star"
                         label="Star Rating"
@@ -106,7 +120,10 @@ export const Form: React.FC<FormProps> = ({ productToEdit, onFormSubmit }) => {
                 label="Amount"
                 value={amount}
                 onChange={(e) => handleAmountChange(e.target.value)}
+                noMargin
             />
+            {errors.amount && <span className="text-red-500">{errors.amount}</span>}
+
             <InputField
                 type="number"
                 placeholder="Enter price"
@@ -115,7 +132,9 @@ export const Form: React.FC<FormProps> = ({ productToEdit, onFormSubmit }) => {
                 value={price}
                 onChange={(e) => handlePriceChange(e.target.value)}
                 isPriceField={true}
+                noMargin
             />
+            {errors.price && <span className="text-red-500">{errors.price}</span>}
 
             <button type="submit" className="mt-2 bg-secondary text-white py-2 rounded-xl">
                 {productToEdit ? 'Update' : 'Create'}
