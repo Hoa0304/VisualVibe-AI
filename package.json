@@ -24,18 +24,20 @@
     "react-router-dom": "^6.26.2",
     "react-select": "^5.8.1",
     "react-toastify": "^10.0.5",
-    "redux": "^5.0.1"
+    "redux": "^5.0.1",
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
     "@types/axios": "^0.14.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/node": "^22.8.0",
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.0",
     "@types/react-redux": "^7.1.33",
     "@types/redux-persist": "^4.3.1",
-    "@vitejs/plugin-react-swc": "^3.5.0",
+    "@vitejs/plugin-react-swc": "^3.7.1",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.9.0",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
@@ -45,6 +47,6 @@
     "tailwindcss": "^3.4.11",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
-    "vite": "^5.4.1"
+    "vite": "^5.4.10"
   }
 }
