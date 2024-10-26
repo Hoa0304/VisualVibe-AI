@@ -35,6 +35,9 @@ export default {
       backgroundPosition: {
         'custom': '-14px -659.134px',
       },
+      screens: {
+        '3xl': '1920px',
+    },
     },
   },
   plugins: [

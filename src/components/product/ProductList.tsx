@@ -21,8 +21,8 @@ const ProductList: React.FC<ProductListProps> = memo(({ products, onEdit, onDele
     ));
   }, []);
   return (
-    <div className="overflow-auto scrollbar-hiddens font-poppins ">
-      <table className="min-w-full border border-secondary overflow-scroll">
+    <div className="overflow-auto scrollbar-hiddens font-poppins h-full">
+      <table className="w-full border border-secondary overflow-scroll h-full">
         <thead>
           <tr className="text-primary uppercase text-base">
             <th className="py-3 px-6 text-left font-medium">Image</th>
@@ -34,7 +34,7 @@ const ProductList: React.FC<ProductListProps> = memo(({ products, onEdit, onDele
             <th className="py-3 px-6 text-left font-medium">Actions</th>
           </tr>
         </thead>
-        <tbody className="text-primary text-sm font-light">
+        <tbody className="text-primary text-sm font-light h-full">
           {products.length > 0 ? (
             products.map((product) => (
               <tr key={product.id} className="border-none">
@@ -54,7 +54,7 @@ const ProductList: React.FC<ProductListProps> = memo(({ products, onEdit, onDele
 
                 </td>
                 <td className="py-3 px-6 text-center font-medium">
-                  {renderStars(product.star)} {/* Hiển thị hình sao */}
+                  {renderStars(product.star)}
                 </td>
                 <td className="py-3 px-6 text-left flex space-x-2">
                   <Button children='Edit' onClick={() => onEdit(product)} className='bg-secondary py-1 px-2 rounded' />
@@ -72,11 +72,11 @@ const ProductList: React.FC<ProductListProps> = memo(({ products, onEdit, onDele
                 </td>
               </tr>
             ))
-          ) : (
-            <tr>
-              <td colSpan={7} className="py-3 px-6 text-center bg-transparent">Loading products...</td>
-            </tr>
-          )}
+            ) : (
+              <tr>
+                <td colSpan={7} className="py-3 px-6 text-center bg-transparent">Loading products...</td>
+              </tr>
+            )}
         </tbody>
       </table>
     </div>

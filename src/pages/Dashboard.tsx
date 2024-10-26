@@ -50,7 +50,7 @@ const Dashboard: React.FC = () => {
       <Header />
       <div className="flex flex-1 mt-3">
         <Sidebar setSelectedView={handleViewChange} />
-        <main className="flex-1 p-4 relative w-[80%] h-full">
+        <main className="flex-1 relative w-[80%] h-full md:w-[50%]">
           {selectedView === 'Home' && (
             <>
               <SearchSection searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
@@ -59,7 +59,7 @@ const Dashboard: React.FC = () => {
               ) : error ? (
                 <p className="text-red-500">{error}</p>
               ) : (
-                <div className="overflow-auto scrollbar-hidden h-[40%] -mt-8">
+                <div className="overflow-auto scrollbar-hidden lg:h-[40%] -mt-8 h-full">
                   {searchTerm ? (
                     <div>
                       <h2 className="text-lg font-poppins mb-2 font-semibold text-primary">Search results:</h2>
@@ -80,8 +80,8 @@ const Dashboard: React.FC = () => {
                     Array.from({ length: 5 }, (_, index) => 5 - index).map((star) => (
                       <div key={star}>
                         {groupedProducts[star] && groupedProducts[star].length > 0 && (
-                          <>
-                            <h2 className="text-lg font-poppins mb-2 font-semibold text-primary">{`Đánh giá sao: ${star}`}</h2>
+                          <div className='h-full'>
+                            <h2 className="text-lg font-poppins mb-2 font-semibold text-primary">{`Star rating: ${star}`}</h2>
                             <div className="flex overflow-x-auto space-x-5 mb-2 hidden-scrollbar">
                               {groupedProducts[star].map((product) => (
                                 <div key={product.id} className="border-none p-6 bg-component rounded-3xl shadow w-[170px] h-[200px] flex-shrink-0">
@@ -90,7 +90,7 @@ const Dashboard: React.FC = () => {
                                 </div>
                               ))}
                             </div>
-                          </>
+                          </div>
                         )}
                       </div>
                     ))
@@ -101,7 +101,7 @@ const Dashboard: React.FC = () => {
           )}
 
           {selectedView === 'Product' && (
-            <>
+            <div className='h-full'>
               <InputField
                 type="text"
                 placeholder="Search"
@@ -115,7 +115,7 @@ const Dashboard: React.FC = () => {
                 onEdit={handleEditClick}
                 onDelete={handleDeleteClick}
               />
-            </>
+            </div>
           )}
           {isFormVisible && productToEdit && (
             <FormOverlay

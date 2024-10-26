@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchProducts, deleteProduct as deleteProductService } from '../../services/productService'; // Thêm import cho deleteProduct
+import { fetchProducts, deleteProduct as deleteProductService, addProduct as addProductService } from '../../services/productService';
 import { Product } from '../../types/product.types';
 import { handleError } from '../../helpers/apiHelpers';
 
@@ -34,11 +34,21 @@ export const useProducts = () => {
     const deleteProduct = async (productId: string) => {
         try {
             await deleteProductService(productId);
-            setProducts((prevProducts) => prevProducts.filter((product) => product.id !== productId)); // Cập nhật trạng thái
+            setProducts((prevProducts) => prevProducts.filter((product) => product.id !== productId));
         } catch (error) {
             setError(handleError(error).message);
         }
     };
 
-    return { products, loading, error, updateProduct, deleteProduct };
+    const addProduct = async (newProductData: Product) => {
+        try {
+            const newProduct = await addProductService(newProductData);
+            setProducts((prevProducts) => [...prevProducts, newProduct]);
+            return newProduct; // Trả về sản phẩm mới để có thể sử dụng ở nơi khác nếu cần
+        } catch (error) {
+            setError(handleError(error).message);
+        }
+    };
+
+    return { products, loading, error, updateProduct, deleteProduct, addProduct };
 };
