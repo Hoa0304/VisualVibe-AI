@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import girlImage from '../assets/images/girl.png';
 import { AiOutlineMail } from 'react-icons/ai';
@@ -6,6 +7,7 @@ import InputField from '../components/common/InputField';
 import Button from '../components/common/Button';
 import { MdPersonOutline } from 'react-icons/md';
 import { useSignUpController } from '../hooks/auth/useSignUpController';
+import { useShowPassword } from '../hooks/auth/useShowPassword';
 
 const SignUp: React.FC = () => {
     const {
@@ -15,10 +17,13 @@ const SignUp: React.FC = () => {
         handleSubmit,
     } = useSignUpController();
 
+    const { showPassword, toggleShowPassword, showConfirmPassword, toggleShowConfirmPassword } = useShowPassword();
+
+
     return (
         <div className="flex justify-end">
             <figure className="hidden lg:block h-full fixed w-[40%] -bottom-16 left-0">
-                <img src={girlImage} alt="Sign up" className="object-cover" style={{ marginLeft: '-12%'}} />
+                <img src={girlImage} alt="Sign up" className="object-cover" style={{ marginLeft: '-12%' }} />
             </figure>
             <div className="w-full md:w-1/3 p-5 mr-56 3xl:mt-[5%]">
                 <h1 className="font-poppins text-left font-normal my-7 text-white" style={{ fontSize: '30px' }}>Sign up</h1>
@@ -43,22 +48,28 @@ const SignUp: React.FC = () => {
                         label="Username"
                         onChange={handleInputChange}
                     />
-                    <InputField
-                        type="password"
-                        placeholder="Enter your Password"
-                        id="password"
-                        icon={<FiLock />}
-                        label="Password"
-                        onChange={handleInputChange}
-                    />
-                    <InputField
-                        type="password"
-                        placeholder="Confirm your Password"
-                        id="confirm"
-                        icon={<FiLock />}
-                        label="Confirm Password"
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                    />
+                    <div className="relative">
+                        <InputField
+                            type={showPassword ? 'text' : 'password'}
+                            placeholder="Enter your Password"
+                            id="password"
+                            icon={<FiLock />}
+                            label="Password"
+                            onChange={handleInputChange}
+                            toggleShowPassword={toggleShowPassword}
+                        />
+                    </div>
+                    <div className="relative">
+                        <InputField
+                            type={showConfirmPassword ? 'text' : 'password'}
+                            placeholder="Confirm your Password"
+                            id="confirm"
+                            icon={<FiLock />}
+                            label="Confirm Password"
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            toggleShowPassword={toggleShowConfirmPassword}
+                        />
+                    </div>
                     <Button className='bg-secondary h-12 rounded-custom' disabled={loading}>
                         {loading ? 'Loading...' : 'Register'}
                     </Button>

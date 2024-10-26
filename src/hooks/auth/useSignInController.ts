@@ -17,7 +17,7 @@ export const useSignInController = () => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent, rememberMe: boolean) => {
         e.preventDefault();
         dispatch(signInStart());
         const errors = validateAuth(formData, 'signIn');
@@ -39,8 +39,17 @@ export const useSignInController = () => {
                 toast.error("Invalid email or password.");
                 return;
             }
+
             dispatch(signInSuccess(data[0]));
             toast.success("Login successful!");
+
+            const token = data[0].token;
+            if (rememberMe) {
+                localStorage.setItem('token', token);
+            } else {
+                sessionStorage.setItem('token', token);
+            }
+
             navigate('/home');
         } catch (error) {
             dispatch(signInFailure((error as Error).message));
