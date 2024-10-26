@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import peopleImage from '../assets/images/people.png';
 import { AiOutlineMail } from 'react-icons/ai';
@@ -11,6 +12,11 @@ import { useSignInController } from '../hooks/auth/useSignInController';
 const SignIn = () => {
     const { loading, handleChange, handleSubmit } = useSignInController();
     const { showPassword, toggleShowPassword } = useShowPassword();
+    const [rememberMe, setRememberMe] = useState(false);
+
+    const handleRememberMeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setRememberMe(e.target.checked);
+    };
 
     return (
         <div className="flex items-center justify-center min-h-screen p-3">
@@ -23,7 +29,7 @@ const SignIn = () => {
                 <p className="text-left text-primary font-poppins font-light text-base mb-8">
                     You can <Link to="/sign-up" className="text-secondary font-medium">Register here!</Link>
                 </p>
-                <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+                <form className="flex flex-col gap-4" onSubmit={(e) => handleSubmit(e, rememberMe)}>
                     <InputField
                         type="email"
                         placeholder="Email"
@@ -44,13 +50,20 @@ const SignIn = () => {
                     />
                     <div className="flex justify-between items-center font-poppins font-light text-tiny">
                         <label className="flex items-center">
-                            <input type="checkbox" className="mr-1" />
+                            <input 
+                                type="checkbox" 
+                                className="mr-1" 
+                                checked={rememberMe} 
+                                onChange={handleRememberMeChange} 
+                            />
                             <span className="text-white">Remember</span>
                         </label>
                         <Link to="/forgot-password" className="text-primary">Forgot Password?</Link>
                     </div>
                     <Button
-                        className='bg-secondary h-12 rounded-custom' disabled={loading}>
+                        className='bg-secondary h-12 rounded-custom' 
+                        disabled={loading}
+                    >
                         {loading ? 'Loading...' : 'Login'}
                     </Button>
                 </form>
