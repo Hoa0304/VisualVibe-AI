@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Product } from '../../types/product.types';
+import { validateProduct } from '../../helpers/validate';
 
 const useProductState = (productToEdit: Product | null) => {
     const [formData, setFormData] = useState<Product>({
@@ -31,26 +32,7 @@ const useProductState = (productToEdit: Product | null) => {
     }, [productToEdit]);
 
     const validate = () => {
-        const newErrors: { [key: string]: string } = {};
-        
-        if (!formData.name) {
-            newErrors.name = 'Name is required';
-        }
-        
-        if (!imageUrl) {
-            newErrors.image = 'Image URL is required';
-        } else if (!/^https?:\/\//.test(imageUrl)) {
-            newErrors.image = 'Invalid image URL';
-        }
-
-        if (amount === '' || Number(amount) < 1) {
-            newErrors.amount = 'Amount must be greater than or equal to 1';
-        }
-
-        if (price === '' || Number(price) <= 0) {
-            newErrors.price = 'Price must be greater than 0';
-        }
-
+        const newErrors = validateProduct(formData, imageUrl, amount, price);
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
