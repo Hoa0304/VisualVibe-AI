@@ -40,15 +40,5 @@ export const useProducts = () => {
         }
     };
 
-    const addProduct = async (newProductData: Product) => {
-        try {
-            const newProduct = await addProductService(newProductData);
-            setProducts((prevProducts) => [...prevProducts, newProduct]);
-            return newProduct; // Trả về sản phẩm mới để có thể sử dụng ở nơi khác nếu cần
-        } catch (error) {
-            setError(handleError(error).message);
-        }
-    };
-
     return { products, loading, error, updateProduct, deleteProduct, addProduct };
 };
