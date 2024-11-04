@@ -13,10 +13,14 @@ const FormOverlay: React.FC<FormOverlayProps> = ({ onClose, onFormSubmit, produc
         onClose();
     };
 
+    const handleSubmit = (newProduct: Product) => {
+        onFormSubmit(newProduct);
+      };
+
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50" onClick={handleOverlayClick}>
             <div className='bg-transparent p-4 rounded w-1/3' onClick={(e) => e.stopPropagation()}>
-                <Form productToEdit={productToEdit} onFormSubmit={onFormSubmit} />
+                <Form productToEdit={productToEdit} onFormSubmit={handleSubmit} />
             </div>
         </div>
     );

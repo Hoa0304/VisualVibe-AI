@@ -3,8 +3,13 @@ import Button from '../components/common/Button';
 import Nav from '../components/header/Nav';
 import FormOverlay from '../components/header/FormOverlay';
 import { useProductForm } from '../hooks/product/useProductFormVisible';
+import { Product } from '../types/product.types';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+    onAddProduct: (product: Product) => void;
+}
+
+const Header: React.FC<HeaderProps> = () => {
     const { isFormVisible, handleToggleForm, handleFormSubmit } = useProductForm();
 
     return (
