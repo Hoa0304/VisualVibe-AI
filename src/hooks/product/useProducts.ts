@@ -1,54 +1,46 @@
-import { useEffect, useState } from 'react';
-import { fetchProducts, deleteProduct as deleteProductService, addProduct as addProductService } from '../../services/productService';
-import { Product } from '../../types/product.types';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Product, RootStateProduct } from '../../types/product.types';
+import {
+    fetchProductsStart,
+    fetchProductsSuccess,
+    fetchProductsFailure,
+    deleteProductSuccess,
+    updateProductSuccess
+} from '../../states/productSlice';
+import { fetchProducts, deleteProduct as deleteProductService } from '../../services/productService';
 import { handleError } from '../../helpers/apiHelpers';
 
 export const useProducts = () => {
-    const [products, setProducts] = useState<Product[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+    const dispatch = useDispatch();
+    const { products, loading, error } = useSelector((state: RootStateProduct) => state.product);
 
     useEffect(() => {
         const loadProducts = async () => {
+            dispatch(fetchProductsStart());
             try {
                 const fetchedProducts = await fetchProducts();
-                setProducts(fetchedProducts);
+                dispatch(fetchProductsSuccess(fetchedProducts));
             } catch (error) {
-                setError(handleError(error).message);
-            } finally {
-                setLoading(false);
+                dispatch(fetchProductsFailure(handleError(error).message));
             }
         };
 
         loadProducts();
-    }, []);
+    }, [dispatch]);
 
     const updateProduct = (updatedProduct: Product) => {
-        setProducts((prevProducts) =>
-            prevProducts.map((product) =>
-                product.id === updatedProduct.id ? updatedProduct : product
-            )
-        );
+        dispatch(updateProductSuccess(updatedProduct));
     };
 
     const deleteProduct = async (productId: string) => {
         try {
             await deleteProductService(productId);
-            setProducts((prevProducts) => prevProducts.filter((product) => product.id !== productId));
+            dispatch(deleteProductSuccess(productId));
         } catch (error) {
-            setError(handleError(error).message);
+            dispatch(fetchProductsFailure(handleError(error).message));
         }
     };
 
-    const addProduct = async (newProductData: Product) => {
-        try {
-            const newProduct = await addProductService(newProductData);
-            setProducts((prevProducts) => [...prevProducts, newProduct]);
-            return newProduct; // Trả về sản phẩm mới để có thể sử dụng ở nơi khác nếu cần
-        } catch (error) {
-            setError(handleError(error).message);
-        }
-    };
-
-    return { products, loading, error, updateProduct, deleteProduct, addProduct };
+    return { products, loading, error, updateProduct, deleteProduct };
 };

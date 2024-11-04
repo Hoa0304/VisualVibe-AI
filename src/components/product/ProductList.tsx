@@ -10,11 +10,6 @@ interface ProductListProps {
 }
 
 const ProductList: React.FC<ProductListProps> = memo(({ products, onEdit, onDelete }) => {
-  // const renderStars = (starCount: number) => {
-  //   return Array.from({ length: starCount }, (_, index) => (
-  //     <span key={index} className="text-yellow-500">⭐</span>
-  //   ));
-  // };
   const renderStars = useCallback((starCount: number) => {
     return Array.from({ length: starCount }, (_, index) => (
       <span key={index} className="text-yellow-500">⭐</span>

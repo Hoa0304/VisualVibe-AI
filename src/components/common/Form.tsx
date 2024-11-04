@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { branches, stars } from '../../constants';
 import { FormProps } from '../../types/product.types';
 import useProductState from '../../hooks/product/useProductState';
@@ -24,7 +24,7 @@ export const Form: React.FC<FormProps> = ({ productToEdit, onFormSubmit }) => {
         handleStarChange,
         resetForm
     } = useProductState(productToEdit || null);
-
+    const [successMessage, setSuccessMessage] = useState<string>('');
     const handleAddOrEdit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -49,6 +49,8 @@ export const Form: React.FC<FormProps> = ({ productToEdit, onFormSubmit }) => {
             }
             onFormSubmit(productData);
             resetForm();
+            setSuccessMessage('Product added/updated successfully!');
+            setTimeout(() => setSuccessMessage(''), 3000);
         } catch (error) {
             console.error('Error adding or updating product:', error);
         }
@@ -139,6 +141,7 @@ export const Form: React.FC<FormProps> = ({ productToEdit, onFormSubmit }) => {
             <button type="submit" className="mt-2 bg-secondary text-white py-2 rounded-xl">
                 {productToEdit ? 'Update' : 'Create'}
             </button>
+            {successMessage && <p className="text-green-500">{successMessage}</p>}
         </form>
     );
 };

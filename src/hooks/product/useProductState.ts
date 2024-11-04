@@ -1,98 +1,81 @@
-import { useEffect, useState } from 'react';
-import { Product } from '../../types/product.types';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Product, RootStateProduct } from '../../types/product.types';
+import {
+    setCurrentProduct,
+    setProductErrors,
+    resetProductState
+} from '../../states/productSlice';
 import { validateProduct } from '../../helpers/validate';
 
 const useProductState = (productToEdit: Product | null) => {
-    const [formData, setFormData] = useState<Product>({
-        image: '',
-        name: '',
-        amount: 0,
-        price: 0,
-        branch: 'Computer',
-        star: 5
-    });
-
-    const [branch, setBranch] = useState('Computer');
-    const [amount, setAmount] = useState('');
-    const [price, setPrice] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
-    const [star, setStar] = useState(1);
-    
-    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const dispatch = useDispatch();
+    const { currentProduct, errors } = useSelector((state: RootStateProduct) => state.product);
 
     useEffect(() => {
         if (productToEdit) {
-            setFormData(productToEdit);
-            setBranch(productToEdit.branch);
-            setAmount(String(productToEdit.amount));
-            setPrice(String(productToEdit.price));
-            setImageUrl(productToEdit.image);
-            setStar(productToEdit.star);
+            dispatch(setCurrentProduct(productToEdit));
+            dispatch(setProductErrors({}));
+        } else {
+            dispatch(resetProductState());
         }
-    }, [productToEdit]);
+    }, [productToEdit, dispatch]);
 
     const validate = () => {
-        const newErrors = validateProduct(formData, imageUrl, amount, price);
-        setErrors(newErrors);
+        const newErrors = validateProduct(
+            currentProduct || { image: '', name: '', amount: 0, price: 0, branch: '', star: 1 },
+            currentProduct?.image || '',
+            String(currentProduct?.amount || ''),
+            String(currentProduct?.price || '')
+        );
+
+        dispatch(setProductErrors(newErrors));
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleInputChange = (id: string, value: string) => {
-        setFormData(prev => ({ ...prev, [id]: value }));
-        setErrors(prev => ({ ...prev, [id]: '' }));
+    const handleInputChange = (id: keyof Product, value: string) => {
+        if (currentProduct) {
+            const updatedProduct = { ...currentProduct, [id]: value };
+            dispatch(setCurrentProduct(updatedProduct));
+            dispatch(setProductErrors({ ...errors, [id]: '' }));
+        }
     };
 
     const handleBranchChange = (value: string) => {
-        setBranch(value);
-        setFormData(prev => ({ ...prev, branch: value }));
-        setErrors(prev => ({ ...prev, branch: '' }));
+        handleInputChange('branch', value);
     };
 
     const handleAmountChange = (value: string) => {
         const numericValue = Number(value);
         if (numericValue >= 1) {
-            setAmount(value);
-            setFormData(prev => ({ ...prev, amount: numericValue }));
-            setErrors(prev => ({ ...prev, amount: '' }));
-        } else {
-            setAmount('');
+            handleInputChange('amount', numericValue.toString());
         }
     };
 
     const handlePriceChange = (value: string) => {
-        setPrice(value);
-        setFormData(prev => ({ ...prev, price: Number(value) }));
-        setErrors(prev => ({ ...prev, price: '' }));
+        const numericValue = Number(value);
+        if (numericValue > 0) {
+            handleInputChange('price', numericValue.toString());
+        }
     };
 
     const handleUrlChange = (value: string) => {
-        setImageUrl(value);
-        setFormData(prev => ({ ...prev, image: value }));
-        setErrors(prev => ({ ...prev, image: '' }));
+        handleInputChange('image', value);
     };
 
     const handleStarChange = (value: number) => {
-        setStar(value);
-        setFormData(prev => ({ ...prev, star: value }));
+        if (currentProduct) {
+            const updatedProduct = { ...currentProduct, star: value };
+            dispatch(setCurrentProduct(updatedProduct));
+        }
     };
 
     const resetForm = () => {
-        setFormData({ image: '', name: '', amount: 0, price: 0, branch: 'Computer', star: 1 });
-        setBranch('Computer');
-        setAmount('');
-        setPrice('');
-        setImageUrl('');
-        setStar(5);
-        setErrors({});
+        dispatch(resetProductState());
     };
 
     return {
-        formData,
-        branch,
-        amount,
-        price,
-        imageUrl,
-        star,
+        currentProduct,
         errors,
         validate,
         handleInputChange,

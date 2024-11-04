@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Product } from '../../types/product.types';
 
-export const useProductForm = () => {
+export const useProductForm = (onAddProduct: (product: Product) => void) => {
     const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
 
     const handleToggleForm = () => {
@@ -9,7 +9,7 @@ export const useProductForm = () => {
     };
 
     const handleFormSubmit = (product: Product) => {
-        console.log('Product submitted:', product);
+        onAddProduct(product);
         setIsFormVisible(false);
     };
 

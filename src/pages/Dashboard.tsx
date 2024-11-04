@@ -13,9 +13,14 @@ import InputField from '../components/common/InputField';
 const Dashboard: React.FC = () => {
   const [productToEdit, setProductToEdit] = useState<Product | undefined>(undefined);
   const [isFormVisible, setIsFormVisible] = useState<boolean>(false);
-  const { products, loading, error, updateProduct, deleteProduct } = useProducts();
+  const {products: fetchedProducts, loading, error, updateProduct, deleteProduct } = useProducts();
   const [selectedView, setSelectedView] = useState<string>('Home');
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [products, setProducts] = useState<Product[]>([]);
+  
+  React.useEffect(() => {
+    setProducts(fetchedProducts);
+  }, [fetchedProducts]);
 
   const handleViewChange = (view: string) => {
     setSelectedView(view);
@@ -30,6 +35,9 @@ const Dashboard: React.FC = () => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       deleteProduct(productId);
     }
+  };
+  const handleAddProduct = (newProduct: Product) => {
+    setProducts(prevProducts => [...prevProducts, newProduct]);
   };
 
   const filteredProducts = products.filter(product =>
@@ -47,7 +55,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="flex flex-col h-screen ml-20 mr-20">
-      <Header />
+      <Header onAddProduct={handleAddProduct}/>
       <div className="flex flex-1 mt-3">
         <Sidebar setSelectedView={handleViewChange} />
         <main className="flex-1 relative w-[80%] h-full md:w-[50%]">

@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { handleError } from '../helpers/apiHelpers';
-import { API_URL } from '../constants';
+
 import { Product } from '../types/product.types';
 
-
+const api = import.meta.env.VITE_API_URL;
 export const fetchProducts = async (): Promise<Product[]> => {
   try {
-    const response = await axios.get(`${API_URL}products`);
+    const response = await axios.get(`${api}products`);
     return response.data;
   } catch (error) {
     throw handleError(error);
@@ -15,7 +15,7 @@ export const fetchProducts = async (): Promise<Product[]> => {
 
 export const addProduct = async (productData: Product): Promise<Product> => {
   try {
-    const response = await axios.post(`${API_URL}products`, productData);
+    const response = await axios.post(`${api}products`, productData);
     return response.data;
   } catch (error) {
     throw handleError(error);
@@ -24,7 +24,7 @@ export const addProduct = async (productData: Product): Promise<Product> => {
 
 export const editProduct = async (id: string, productData: Product): Promise<Product> => {
   try {
-    const response = await axios.put(`${API_URL}products/${id}`, productData);
+    const response = await axios.put(`${api}products/${id}`, productData);
     return response.data;
   } catch (error) {
     throw handleError(error);
@@ -33,7 +33,7 @@ export const editProduct = async (id: string, productData: Product): Promise<Pro
 
 export const deleteProduct = async (id: string): Promise<void> => {
   try {
-    await axios.delete(`${API_URL}products/${id}`);
+    await axios.delete(`${api}products/${id}`);
   } catch (error) {
     throw handleError(error);
   }
